@@ -1,0 +1,27 @@
+create index.js file inside your required folder
+npm init
+
+after that npm install express and import it
+create port
+create app which will call all the functionality of express
+
+run the server i.e. app.listen(port, (err) => {}) 
+
+#handle the file system
+app.get()
+
+// setting up the template engine (ejs)
+install the ejs npm install ejs
+
+-> tell the server that ejs will be our template engine
+first of all import path 
+tell the app to set my view engine to be ejs
+now create a folder name views which will contain all the ejs files
+then tell the app to join this folder with our current directory  
+create a html file in the views folder with .ejs extension
+now tell the app to render this page (**name of the file and rendering page should be same)
+
+// middleware
+1. using default middleware
+below app.set() and above the controller use the inbuilt middleware of express
+app.use(express.urlencoded())

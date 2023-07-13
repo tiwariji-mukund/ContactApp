@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/css/home.css">
+</head>
+<body>
+    <h1>My Contact List</h1>
+
+    <div class="contact-form">
+        <form action="/create-contact" method="post">
+            <input type="text" name="name" placeholder="Enter Your Name" required>
+            <input type="number" name="phone" placeholder="Enter Your Phone Number" required>
+
+            <button type="submit">Add Contact</button>
+        </form>
+    </div>
+
+    <div class="result">        
+        <div class="no-data">
+            <% if(contact_list.length === 0) { %>
+                <h3>No Contacts available</h3>
+            <% } %>
+        </div>
+    
+        <div class="show-data">
+            <ul>
+                <% for(let i of contact_list) {%>
+                    <li>
+                        <p>Name: <%= i.name %></p>
+                        <p>Contact No: <%= i.phone %></p>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+    
+
+    <script type="text/javascript" src="/js/home.js"></script>
+</body>
+</html>
