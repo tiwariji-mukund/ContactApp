@@ -9,20 +9,7 @@ const app = express();
 // import module/model
 const Contact = require('./models/contact');
 
-let contactList = [
-    {
-        name: 'Mukund',
-        phone: 9451721374
-    },
-    {
-        name: 'Gargi',
-        phone: 9580578185
-    },
-    {
-        name: 'Shivangi',
-        phone: 8427185274
-    }
-]
+let contactList = [];
 
 // setting up the view engine or template engine
 app.set('view engine', 'ejs');
