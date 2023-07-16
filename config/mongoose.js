@@ -12,7 +12,7 @@ db.on('error', console.error.bind(console, 'error in connecting with db'));
 
 // if connection is successfully print the message
 db.once('open', () => {
-    console.log('Successfully connected to the db, MongDB');
+    console.log('Successfully connected to the db, MongoDB');
 })
 
 // Make sure MongoDB in task manager is running before this step else MongoDB will not be connected

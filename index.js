@@ -34,39 +34,62 @@ app.use(express.urlencoded()); // default middlewares
 app.use(express.static('assets'));
 
 // Controller
-app.get('/', (req,res) => {
-    return res.render('home', {
-        title: "Contact App",
-        contact_list: contactList
-        // contact_list is used for communication b/w server and ejs file
-    });
-});
+// new way to write as Model do not accept the previous version of code
+app.get('/', async (req, res) => {
+    // try this code if there is no error
+    try {
+        // search through the whole contact list
+        const contacts = await Contact.find({});
+        // render the home page
+        return res.render('home', { 
+            title: "Contact App",
+            contact_list: contacts
+        });
+    }
+    // if there is an error come to this part 
+    catch (err) {
+      console.log(`Error in retrieving contacts: ${err}`);
+      return;
+    }
+  });
+    
 
-app.get('/about', (req,res) => {
-    return res.render('about', {
-        title: "About Us",
-        myName: 'Mukund'
-    });
-});
-
-app.post('/create-contact', (req, res) => {
+app.post('/create-contact', async(req, res) => {
     // contactList.push(req.body);
     // return res.redirect('back');
-
-    Contact.create({
-        name: req.body.name,
-        phone: req.body.phone
-    })
-});
-
-app.get('/delete-contact/', (req,res) => {
-    let phone = req.query.phone;
-
-    let contactIndex = contactList.findIndex(contact => contact.phone == phone);
-    if(contactIndex != -1){
-        contactList.splice(contactIndex, 1);
+    // if no error come to this part of code
+    try{
+        // create the contact
+        const newContact = await Contact.create({
+            name: req.body.name,
+            phone: req.body.phone
+        }); 
+        // print it on the console and return back to the home page
+        console.log("New Contact created");
         return res.redirect('back');
     }
+    // if there is any error jump here
+    catch(err){
+        // print the error in the console
+        console.log(`Error in creating the contact ${err}`);
+        return;
+    }
+    
+});
+
+app.get('/delete-contact/', async(req,res) => {
+    try{
+        let id = req.query.id;
+
+        let contactIndex = await Contact.findByIdAndDelete(id);
+        console.log("Contact deleted Successfully");
+        return res.redirect('back');
+    }
+    catch(err){
+        console.log(`Error in deleting the object from the database, ${err}`);
+        return;
+    }
+    
 })
 
 
