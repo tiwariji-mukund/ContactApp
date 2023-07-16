@@ -2,7 +2,13 @@ const express = require('express');
 const path = require('path');
 const port = 8000;
 
+// import the db
+const db = require('./config/mongoose')
 const app = express();
+
+// import module/model
+const Contact = require('./models/contact');
+
 let contactList = [
     {
         name: 'Mukund',
@@ -44,10 +50,24 @@ app.get('/about', (req,res) => {
 });
 
 app.post('/create-contact', (req, res) => {
-    contactList.push(req.body);
-    return res.redirect('back');
+    // contactList.push(req.body);
+    // return res.redirect('back');
+
+    Contact.create({
+        name: req.body.name,
+        phone: req.body.phone
+    })
 });
 
+app.get('/delete-contact/', (req,res) => {
+    let phone = req.query.phone;
+
+    let contactIndex = contactList.findIndex(contact => contact.phone == phone);
+    if(contactIndex != -1){
+        contactList.splice(contactIndex, 1);
+        return res.redirect('back');
+    }
+})
 
 
 // start the server
@@ -56,5 +76,5 @@ app.listen(port, (err) => {
         console.log("Error in running server", err);
         return;
     }
-    console.log(`Server is running fine on port: http:localhost:${port}`);
+    console.log(`Server is running fine on port: http://localhost:${port}`);
 })
